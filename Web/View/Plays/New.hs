@@ -1,35 +1,26 @@
 module Web.View.Plays.New where
 import Web.View.Prelude
-import Application.Script.Prelude (respondHtml, redirectTo)
 
 
 data NewView = NewView { play :: Play }
 
 instance View NewView where
     html NewView { .. } = [hsx|
-        <h1>Add Play</h1>
+        <!-- {breadcrumb} -->
         {renderForm play}
     |]
-        where
-            breadcrumb = renderBreadcrumb
-                [ breadcrumbLink "Plays" PlaysAction
-                , breadcrumbText "New Play"
-                ]
+        -- where
+        --     breadcrumb = renderBreadcrumb
+        --         [ breadcrumbLink "Plays" PlaysAction
+        --         , breadcrumbText "New Play"
+        --         ]
 
 renderForm :: Play -> Html
-renderForm play = formFor play [hsx|
-    {(selectField #direction getDirectionList) {autofocus = True}}
-    {(selectField #strategy getStrategyList)}
-    {(textField #underlying)}
-    {(numberField #underlyingPrice)}
-    {(numberField #commission)}
-    {(numberField #fees)}
-    {(numberField #profitProb)}
-    {(textField #openingThoughts) {placeholder = "Why did you open this trade?"}}
+renderForm play = formFor' play (pathTo NewLegsAction) [hsx|
+    {(numberField #quantity)}
+    {(textField #underlying) { additionalAttributes = [ ( "style", "text-transform: uppercase" ), ( "maxlength", "6" )]}}
+    {(selectField  #direction getDirectionList)}
+    {(selectField  #strategy getStrategyList)}
     {submitButton}
-|]
 
-instance CanSelect Text where
-    type SelectValue Text = Text
-    selectValue text = text
-    selectLabel text = text
+|]

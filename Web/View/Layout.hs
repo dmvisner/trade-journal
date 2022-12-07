@@ -27,7 +27,7 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
             <a class="navbar-brand" href="/">Trade Journal</a>
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/Plays">Plays</a>
+                    <!-- <a class="nav-link" href="/Positions">Positions</a> -->
                 </li>
             </ul>
         </div>
@@ -68,6 +68,7 @@ scripts = [hsx|
         <script src={assetPath "/helpers.js"}></script>
         <script src={assetPath "/ihp-auto-refresh.js"}></script>
         <script src={assetPath "/app.js"}></script>
+        <script src="/vendor/ihp-ssc.js"></script>
     |]
 
 devScripts :: Html

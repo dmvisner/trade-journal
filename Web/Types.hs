@@ -4,19 +4,9 @@ import IHP.Prelude
 import IHP.ModelSupport
 import Generated.Types
 import qualified Prelude as P
+import IHP.View.Form
 
 data WebApplication = WebApplication deriving (Eq, Show)
-data StaticController = WelcomeAction deriving (Eq, Show, Data)
-
-data PlaysController
-    = PlaysAction
-    | NewPlayAction
-    | ShowPlayAction { playId :: !(Id Play) }
-    | CreatePlayAction
-    | EditPlayAction { playId :: !(Id Play) }
-    | UpdatePlayAction { playId :: !(Id Play) }
-    | DeletePlayAction { playId :: !(Id Play) }
-    deriving (Eq, Show, Data)
 
 data Strategy = 
     IronCondor
@@ -28,17 +18,44 @@ data Strategy =
     | Call
     | Calendar
     | Diagonal
-    deriving (Enum, Bounded, Eq)
+    deriving (Enum, Bounded, Eq, Read, Show)
 
-data Direction = Bullish | Bearish | Neutral deriving (Enum, Bounded, Eq, Show)
+instance CanSelect Strategy where
+    type SelectValue Strategy = Text
+    selectValue = show
 
-instance P.Show Strategy where 
-    show IronCondor = "Iron Condor"
-    show PutVertical = "Put Vertical"
-    show CallVertical = "Call Vertical"
-    show Strangle = "Strangle"
-    show Straddle = "Straddle"
-    show Put = "Put"
-    show Call = "Call"
-    show Calendar = "Calendar"
-    show Diagonal = "Diagonal" 
+    selectLabel IronCondor = "Iron Condor"
+    selectLabel PutVertical = "Put Vertical"
+    selectLabel CallVertical = "Call Vertical"
+    selectLabel strategy = show strategy
+
+data Direction =
+    Bullish
+    | Bearish
+    | Neutral
+    deriving (Enum, Bounded, Eq, Show)
+
+instance CanSelect Direction where
+    type SelectValue Direction = Text
+    selectValue = show
+    
+    selectLabel = show
+
+data Position = Position Play [Leg] deriving (Show)
+
+data PlaysController
+    =  NewPlayAction
+    | CreatePlayAction
+    deriving (Eq, Show, Data)
+
+
+data LegsController
+    = NewLegsAction
+    | CreateLegsAction
+    deriving (Eq, Show, Data)
+
+data PositionsController
+    = PositionsAction
+    | NewPositionAction
+    | CreatePositionAction
+    deriving (Eq, Show, Data)

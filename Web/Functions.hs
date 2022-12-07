@@ -3,8 +3,14 @@ module Web.Functions where
 import IHP.Prelude
 import Web.Types
 
-getStrategyList :: [Text]
-getStrategyList = map show (enumFrom (minBound :: Strategy))
+getStrategyList :: [Strategy]
+getStrategyList = enumFrom (minBound :: Strategy)
 
-getDirectionList :: [Text]
-getDirectionList = map show (enumFrom (minBound :: Direction))
+getDirectionList :: [Direction]
+getDirectionList = enumFrom (minBound :: Direction)
+
+numLegsForStrategy :: Strategy -> Int
+numLegsForStrategy IronCondor = 4
+numLegsForStrategy Call = 1
+numLegsForStrategy Put = 1
+numLegsForStrategy _ = 2
