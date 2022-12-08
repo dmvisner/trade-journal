@@ -4,7 +4,6 @@ import IHP.RouterPrelude
 import Web.Controller.Prelude
 import Web.View.Layout (defaultLayout)
 import IHP.ServerSideComponent.RouterFunctions
-import Web.Component.LegsDisplay
 
 -- Controller Imports
 import Web.Controller.Positions
